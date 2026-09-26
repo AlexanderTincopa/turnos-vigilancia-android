@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unpack project
-        run: unzip -o project.zip
+      - name: Decode project archive
+        run: |
+          base64 -d project.b64 > project.zip
+          unzip -t project.zip
+          unzip -o project.zip
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
