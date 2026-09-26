@@ -16,6 +16,36 @@ jobs:
           cat project.b64.* | base64 -d > project.zip
           unzip -q project.zip
 
+      - name: Apply calendar interaction fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("TurnosVigilancia/app/src/main/java/com/alexandertm/turnosvigilancia/ui/App.kt")
+          s = p.read_text()
+          if "import androidx.compose.foundation.rememberScrollState" not in s:
+              s = s.replace(
+                  "import androidx.compose.foundation.layout.*\n",
+                  "import androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.rememberScrollState\nimport androidx.compose.foundation.verticalScroll\n"
+              )
+          s = s.replace(
+              "Column(Modifier.fillMaxSize().padding(16.dp)) {",
+              "Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp)) {",
+              1
+          )
+          s = s.replace(
+              "LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.height(360.dp), userScrollEnabled = false)",
+              "LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.height(320.dp), userScrollEnabled = false)"
+          )
+          s = s.replace(
+              "modifier = Modifier.padding(2.dp).aspectRatio(1f).clickable { selected = date },",
+              """modifier = Modifier.padding(2.dp).aspectRatio(1f).clickable {
+                                selected = date
+                                nav.navigate("day/$date")
+                            },"""
+          )
+          p.write_text(s)
+          PY
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
