@@ -92,11 +92,11 @@ m=base/'AndroidManifest.xml'; ms=m.read_text()
 if 'android:icon=' not in ms: ms=ms.replace('android:label="Turnos de Vigilancia"','android:label="Turnos de Vigilancia"\n        android:icon="@mipmap/ic_launcher"\n        android:roundIcon="@mipmap/ic_launcher_round"')
 m.write_text(ms)
 
-(base/'drawable').mkdir(exist_ok=True); (base/'mipmap-anydpi-v26').mkdir(exist_ok=True); (base/'mipmap-anydpi').mkdir(exist_ok=True)
+res=base/'res'; (res/'drawable').mkdir(exist_ok=True); (res/'mipmap-anydpi-v26').mkdir(exist_ok=True); (res/'mipmap-anydpi').mkdir(exist_ok=True)
 fg='''<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108"><path android:fillColor="#FFFFFF" android:pathData="M54,16 L82,27 L82,49 C82,69 70,84 54,92 C38,84 26,69 26,49 L26,27 Z"/><path android:fillColor="#0B5CAD" android:pathData="M38,38 L70,38 L70,67 L38,67 Z"/><path android:fillColor="#FFFFFF" android:pathData="M42,45 L66,45 L66,63 L42,63 Z M45,34 L49,34 L49,42 L45,42 Z M59,34 L63,34 L63,42 L59,42 Z"/><path android:fillColor="#0B5CAD" android:pathData="M46,49 L52,49 L52,55 L46,55 Z M56,49 L62,49 L62,55 L56,55 Z M46,57 L52,57 L52,61 L46,61 Z"/></vector>'''
 bg='''<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108"><path android:fillColor="#0B5CAD" android:pathData="M0,0h108v108h-108z"/></vector>'''
 ad='''<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"><background android:drawable="@drawable/ic_launcher_background"/><foreground android:drawable="@drawable/ic_launcher_foreground"/></adaptive-icon>'''
 legacy='''<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="48dp" android:height="48dp" android:viewportWidth="108" android:viewportHeight="108"><path android:fillColor="#0B5CAD" android:pathData="M0,0h108v108h-108z"/><path android:fillColor="#FFFFFF" android:pathData="M54,16 L82,27 L82,49 C82,69 70,84 54,92 C38,84 26,69 26,49 L26,27 Z"/><path android:fillColor="#0B5CAD" android:pathData="M38,38 L70,38 L70,67 L38,67 Z"/><path android:fillColor="#FFFFFF" android:pathData="M42,45 L66,45 L66,63 L42,63 Z M45,34 L49,34 L49,42 L45,42 Z M59,34 L63,34 L63,42 L59,42 Z"/></vector>'''
-(base/'drawable/ic_launcher_foreground.xml').write_text(fg);(base/'drawable/ic_launcher_background.xml').write_text(bg)
-(base/'mipmap-anydpi-v26/ic_launcher.xml').write_text(ad);(base/'mipmap-anydpi-v26/ic_launcher_round.xml').write_text(ad)
-(base/'mipmap-anydpi/ic_launcher.xml').write_text(legacy);(base/'mipmap-anydpi/ic_launcher_round.xml').write_text(legacy)
+(res/'drawable/ic_launcher_foreground.xml').write_text(fg);(res/'drawable/ic_launcher_background.xml').write_text(bg)
+(res/'mipmap-anydpi-v26/ic_launcher.xml').write_text(ad);(res/'mipmap-anydpi-v26/ic_launcher_round.xml').write_text(ad)
+(res/'mipmap-anydpi/ic_launcher.xml').write_text(legacy);(res/'mipmap-anydpi/ic_launcher_round.xml').write_text(legacy)
