@@ -13,15 +13,18 @@ jobs:
 
       - name: Rebuild stable base project
         run: |
+          git fetch origin f928e0d66db441ad40222e86ea22 --depth=1 || true
           git fetch origin f928e0d66db441ad4028cef7b16fddfde5b9e74a --depth=1
           for i in 00 01 02 03 04 05 06; do
             git show f928e0d66db441ad4028cef7b16fddfde5b9e74a:project.b64.$i
           done | base64 -d > project.zip
           unzip -q project.zip
 
-      - name: Apply MVP v5 UI
+      - name: Apply MVP v5 changes
         run: |
-          base64 -d .github/overrides/App.kt.gz.b64 | gzip -d > TurnosVigilancia/app/src/main/java/com/alexandertm/turnosvigilancia/ui/App.kt
+          cat .github/patches/app_v5.patch.gz.b64.* | base64 -d | gzip -d > /tmp/app_v5.patch
+          cd TurnosVigilancia/app/src/main/java/com/alexandertm/turnosvigilancia/ui
+          patch -p1 < /tmp/app_v5.patch
 
       - uses: actions/setup-java@v4
         with:
