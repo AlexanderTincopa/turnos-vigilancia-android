@@ -16,9 +16,6 @@ jobs:
           cat project.b64.* | base64 -d > project.zip
           unzip -q project.zip
 
-      - name: Apply MVP fixes
-        run: python .github/scripts/apply_fixes.py
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
