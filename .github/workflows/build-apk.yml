@@ -11,20 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Rebuild stable base project
+      - name: Rebuild project archive
         run: |
-          git fetch origin f928e0d66db441ad40222e86ea22 --depth=1 || true
-          git fetch origin f928e0d66db441ad4028cef7b16fddfde5b9e74a --depth=1
-          for i in 00 01 02 03 04 05 06; do
-            git show f928e0d66db441ad4028cef7b16fddfde5b9e74a:project.b64.$i
-          done | base64 -d > project.zip
+          cat project.b64.* | base64 -d > project.zip
           unzip -q project.zip
 
-      - name: Apply MVP v5 changes
-        run: |
-          cat .github/patches/app_v5.patch.gz.b64.* | base64 -d | gzip -d > /tmp/app_v5.patch
-          cd TurnosVigilancia/app/src/main/java/com/alexandertm/turnosvigilancia/ui
-          patch -p1 < /tmp/app_v5.patch
+      - name: Apply MVP v6 navigation and branding
+        run: python .github/scripts/apply_v6.py
 
       - uses: actions/setup-java@v4
         with:
